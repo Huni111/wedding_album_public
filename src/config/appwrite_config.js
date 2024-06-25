@@ -1,4 +1,4 @@
-import client from './config/appwrite_config';
+import {Client} from 'appwrite';
 
 const client = new Client();
 

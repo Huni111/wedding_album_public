@@ -1,4 +1,9 @@
-import client from './config/appwrite_config';
+import client from './appwrite_config';
+import { Storage, ID } from 'appwrite';
+
+
+const storage = new Storage(client);
+
 
 export async function fetchImagesFromAppwrite(cursor = undefined) {
     
@@ -8,13 +13,12 @@ export async function fetchImagesFromAppwrite(cursor = undefined) {
     };
   
     try {
-      const response = await client.storage.listFiles('your-bucket-id', params);
-      const images = response.documents.filter((file) => file.mimeType.startsWith('image/')) // Filter for images
-        .map((item) => ({ src: item.url || 'Image' })); 
-  
+      const response = await storage.listFiles('66757aad001209759337');
+      const images = response.files.filter((file) => file.mimeType.startsWith('image/')) // Filter for images
+        const ids = images.map(item => item); 
+        //console.log(ids)
       return {
-        images,
-        nextCursor: response.cursor, 
+        ids
       };
     } catch (error) {
       console.error('Error fetching images:', error);
