@@ -5,12 +5,17 @@ import { Storage, ID, Query } from 'appwrite';
 const storage = new Storage(client);
 
 
-export async function fetchImagesFromAppwrite(cursor = undefined) {
+export async function fetchMoreImagesFromAppwrite(cursor) {
     
    
   
     try {
-      const response = await storage.listFiles('66757aad001209759337',[Query.limit(2)]);
+        console.log(cursor)
+      const response = await storage.listFiles(
+        '66757aad001209759337',
+        [Query.limit(2)], 
+        [Query.cursorAfter(cursor)]
+    );
       const images = response.files.filter((file) => file.mimeType.startsWith('image/')) // Filter for images
         const ids = images.map(item => item); 
          console.log(ids)

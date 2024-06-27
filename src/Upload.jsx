@@ -7,7 +7,7 @@ const storage = new Storage(client);
 
 export default function Upload() {
 
-    const [file,  setFile] = useState(null)
+    const [file, setFile] = useState(null)
 
 
     const handleFileChange = (e) => {
@@ -18,15 +18,16 @@ export default function Upload() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if(file){
-            try{
+        if (file) {
+            try {
                 const response = await storage.createFile('66757aad001209759337', ID.unique(), file)
                 console.log('Photo uploaded with success!', response)
-            }catch(err){
+                alert('Kép feltőltve!')
+            } catch (err) {
                 console.log('File upload unsuccessful!', err)
 
             }
-        }else{
+        } else {
             alert('Válassz ki photot amit készitettél!')
         }
     }
@@ -34,12 +35,15 @@ export default function Upload() {
 
 
 
-    return(
+    return (
         <>
-            <form onSubmit={handleSubmit}>
-                <input type='file' onChange={handleFileChange} accept='image/*'></input>
-                <button type='submit'>Kep feltoltes</button>
-            </form>
+            <div className='form_wrapper'>
+                <form onSubmit={handleSubmit}>
+                    <label className='file' htmlFor="files" >Válassz képet!</label>
+                    <input id="files" onChange={handleFileChange} type="file" />
+                    <button className='file' type='submit'>Kep feltoltes</button>
+                </form>
+            </div>
         </>
     )
 }
