@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import client from './config/appwrite_config';
 import { Storage, ID } from 'appwrite';
+import CloudUploadTwoToneIcon from '@mui/icons-material/CloudUploadTwoTone';
 
 const storage = new Storage(client);
 
@@ -39,9 +40,10 @@ export default function Upload() {
         <>
             <div className='form_wrapper'>
                 <form onSubmit={handleSubmit}>
-                    <label className='file' htmlFor="files" >Válassz képet!</label>
+                <h2 className='upload_title'>Tőltsd fel képeid a lagzinkról!</h2>
+                    <label className='file' htmlFor="files" >Válaszd ki a képet!</label>
                     <input id="files" onChange={handleFileChange} type="file" />
-                    <button className='file' type='submit'>Kep feltoltes</button>
+                    <button className='file' type='submit'>Kep feltoltes <CloudUploadTwoToneIcon/></button>
                 </form>
             </div>
         </>
