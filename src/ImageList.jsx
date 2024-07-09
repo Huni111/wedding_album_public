@@ -13,13 +13,18 @@ export default function List() {
   const [isLoading, setIsLoading] = useState(false);
   const [clickedImg, setClickedImg] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(null);
+  const bucketId = import.meta.env.VITE_BUCKET_ID;
+
 
 
 
   useEffect(() => {
     const fetch = async () => {
       const img = await fetchImagesFromAppwrite();
+
       setImages(img.ids)
+      
+
       
        
       //     setCursor(img.nextCursor);
@@ -36,11 +41,10 @@ export default function List() {
     try {
       
       const cursor = images[images.length - 1].$id;
-      // console.log(cursor)
-      // const ofset = images.length;
+      
       
       const nextImages  = await fetchMoreImagesFromAppwrite(cursor);
-      console.log(nextImages)
+      
       setImages([...images, ...nextImages.ids]);
       
 
@@ -71,7 +75,7 @@ export default function List() {
     const totalLength = images.length;
     if (currentIndex + 1 >= totalLength) {
       setCurrentIndex(0);
-      const newUrl = storage.getFilePreview('66757aad001209759337', images[0].$id);
+      const newUrl = storage.getFilePreview(bucketId, images[0].$id);
       setClickedImg(newUrl);
       return;
     }
@@ -79,7 +83,7 @@ export default function List() {
     const newUrl = images.filter((item) => {
       return images.indexOf(item) === newIndex;
     });
-    const newItem = storage.getFilePreview('66757aad001209759337', newUrl[0].$id);
+    const newItem = storage.getFilePreview(bucketId, newUrl[0].$id);
     setClickedImg(newItem);
     setCurrentIndex(newIndex);
   };
@@ -88,7 +92,7 @@ export default function List() {
     const totalLength = images.length;
     if (currentIndex === 0) {
       setCurrentIndex(totalLength - 1);
-      const newUrl = storage.getFilePreview('66757aad001209759337', images[totalLength - 1].$id);
+      const newUrl = storage.getFilePreview(bucketId, images[totalLength - 1].$id);
       setClickedImg(newUrl);
       return;
     }
@@ -96,7 +100,7 @@ export default function List() {
     const newUrl = images.filter((item) => {
       return images.indexOf(item) === newIndex;
     });
-    const newItem = storage.getFilePreview('66757aad001209759337', newUrl[0].$id);
+    const newItem = storage.getFilePreview(bucketId, newUrl[0].$id);
     setClickedImg(newItem);
     setCurrentIndex(newIndex);
   };
@@ -110,9 +114,9 @@ export default function List() {
             image.$id ? (
               <img
                 key={index}
-                src={storage.getFilePreview('66757aad001209759337', image.$id)}
+                src={storage.getFilePreview(bucketId, image.$id)}
                 alt={""}
-                onClick={() => handleClick(storage.getFilePreview('66757aad001209759337', image.$id), index)}
+                onClick={() => handleClick(storage.getFilePreview(bucketId, image.$id), index)}
               />
             ) : (
               <p key={index}>Invalid image ID</p>
@@ -138,7 +142,7 @@ export default function List() {
 
         {isLoading && <h3>Betőltés...</h3>}
 
-        <button className='file' onClick={fetchMoreImages} disabled={isLoading}>Még több kép!</button>
+        <button className='file' onClick={fetchMoreImages} disabled={isLoading}>More photos!</button>
       </div>
     </>
   );

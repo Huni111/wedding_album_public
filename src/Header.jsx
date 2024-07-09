@@ -8,8 +8,8 @@ export default function Header() {
                 <h1 className='title'>Hunor & Krisztina</h1>
                 <nav>
                     <ul>
-                    <Link to='/list'> <li className='menu'>Kepek</li></Link>
-                    <Link to='/'><li className='menu'>Feltoltes</li></Link>
+                    <Link to='/list'> <li className='menu'>Photos</li></Link>
+                    <Link to='/'><li className='menu'>Upload</li></Link>
                     </ul>
                 </nav>
             </div>
